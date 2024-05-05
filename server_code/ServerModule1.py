@@ -12,9 +12,11 @@ def load_data():
     return pd.read_csv(data_files['nocturia_df.csv'])
 
 @anvil.server.callable
-def get_age_distribution():
-    df = load_data()
-    return df['age'].tolist()
+def get_age_distribution(min_age, max_age):
+    df = pd.read_csv('/path/to/nocturia_df.csv')  # Load the dataset
+    # Filter the dataframe for the specified age range
+    filtered_df = df[(df['age'] >= min_age) & (df['age'] <= max_age)]
+    return filtered_df['age'].tolist()
 
 @anvil.server.callable
 def get_bmi_distribution():

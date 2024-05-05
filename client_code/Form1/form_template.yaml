@@ -11,12 +11,25 @@ components:
   - name: plotAgeDistribution
     properties: {}
     type: Plot
-    layout_properties: {grid_position: 'VDKDFE,BAOOBK'}
+    layout_properties: {grid_position: 'VDKDFE,BAOOBK DQVAXF,SLKZTB'}
     event_bindings: {click: plot_1_click}
+  - name: text_input_min_age
+    properties: {}
+    type: TextBox
+    layout_properties: {grid_position: 'VDKDFE,BAOOBK FOAYUJ,BGJDWB'}
+  - name: text_input_max_age
+    properties: {}
+    type: TextBox
+    layout_properties: {grid_position: 'VDKDFE,BAOOBK FOAYUJ,ECNTSR'}
+    event_bindings: {pressed_enter: text_input_max_age_pressed_enter}
+  - name: button_1
+    properties: {text: button_1}
+    type: Button
+    layout_properties: {grid_position: 'VDKDFE,BAOOBK IELTLP,OZUOTC'}
   - name: plotBMIDistribution
     properties: {}
     type: Plot
-    layout_properties: {grid_position: 'VDKDFE,VBCRDF'}
+    layout_properties: {grid_position: 'VDKDFE,BOCCEW'}
     event_bindings: {click: plotBMIDistribution_click}
   - name: plotSexDistribution
     properties: {}

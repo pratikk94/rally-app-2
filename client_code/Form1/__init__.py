@@ -17,8 +17,6 @@ class Form1(Form1Template):
         self.load_plots()
 
   def load_plots(self):
-        # Age Distribution
-        self.plot_age_distribution()
         self.plot_ahi_distribution()
         self.plot_alcohol_consumption()
         self.plot_bmi_distribution()
@@ -29,11 +27,20 @@ class Form1(Form1Template):
         self.plot_sleep_efficiency_by_age()
         #self.plot_smoking_status()
   
-  def plot_age_distribution(self):
-      age_data = anvil.server.call('get_age_distribution')
-      fig = go.Figure(data=[go.Histogram(x=age_data)])
-      fig.update_layout(title='Age Distribution')
-      self.plotAgeDistribution.figure = fig  # 'plotAgeDistribution' is the name of the Plot component on your form
+  def button_plot_age_distribution_click(self, **event_args):
+        # Get the minimum and maximum age from the text inputs
+        min_age = int(self.text_input_min_age.text)
+        max_age = int(self.text_input_max_age.text)
+
+        # Call the server function with the specified age range
+        age_data = anvil.server.call('get_age_distribution', min_age, max_age)
+        
+        # Create the histogram plot
+        fig = go.Figure(data=[go.Histogram(x=age_data)])
+        fig.update_layout(title='Age Distribution', xaxis_title='Age', yaxis_title='Frequency')
+
+        # Display the plot in the Plot component
+        self.plotAgeDistribution.figure = fig
 
   def plot_bmi_distribution(self):
       bmi_data = anvil.server.call('get_bmi_distribution')
@@ -94,5 +101,11 @@ class Form1(Form1Template):
 
   def plotBMIDistribution_click(self, points, **event_args):
     """This method is called when a data point is clicked."""
+    pass
+
+  def text_input_max_age_pressed_enter(self, **event_args):
+    print("Clicked")
+    self.button_plot_age_distribution_click(self, **event_args)
+   
     pass
       
