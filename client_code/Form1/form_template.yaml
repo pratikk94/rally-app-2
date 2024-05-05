@@ -8,29 +8,52 @@ components:
   name: column_panel_1
   layout_properties: {slot: default}
   components:
+  - name: label_1
+    properties: {text: Below graph gives us age(x) vs frequency of nocturia (y), align: center}
+    type: Label
+    layout_properties: {grid_position: 'VDKDFE,BAOOBK WSDRQC,ISEINU'}
   - name: plotAgeDistribution
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'VDKDFE,BAOOBK DQVAXF,SLKZTB'}
     event_bindings: {click: plot_1_click}
   - name: text_input_min_age
-    properties: {}
+    properties: {text: min age, align: center}
     type: TextBox
     layout_properties: {grid_position: 'VDKDFE,BAOOBK FOAYUJ,BGJDWB'}
   - name: text_input_max_age
-    properties: {}
+    properties: {text: max age, align: center}
     type: TextBox
     layout_properties: {grid_position: 'VDKDFE,BAOOBK FOAYUJ,ECNTSR'}
     event_bindings: {pressed_enter: text_input_max_age_pressed_enter}
-  - name: button_1
-    properties: {text: button_1}
+  - name: Set_age_range
+    properties: {text: Set age Range}
     type: Button
     layout_properties: {grid_position: 'VDKDFE,BAOOBK IELTLP,OZUOTC'}
+    event_bindings: {click: Set_age_range_click}
+  - name: label_2
+    properties: {text: Below graph gives BMI distribution (x) vs frequency of nocturia (y),
+      align: center}
+    type: Label
+    layout_properties: {grid_position: 'VDKDFE,BOCCEW SZEQDL,BUCYOP'}
   - name: plotBMIDistribution
     properties: {}
     type: Plot
-    layout_properties: {grid_position: 'VDKDFE,BOCCEW'}
+    layout_properties: {grid_position: 'VDKDFE,BOCCEW REFGDQ,QHOOAK'}
     event_bindings: {click: plotBMIDistribution_click}
+  - name: text_input_min_bmi
+    properties: {text: min bmi, align: center}
+    type: TextBox
+    layout_properties: {grid_position: 'VDKDFE,BOCCEW KTCAJX,DWMGCU'}
+  - name: text_input_max_bmi
+    properties: {text: max bmi, align: center}
+    type: TextBox
+    layout_properties: {grid_position: 'VDKDFE,BOCCEW KTCAJX,SHVJPU'}
+  - name: set_bmi_index
+    properties: {text: SET BMI RANGE}
+    type: Button
+    layout_properties: {grid_position: 'VDKDFE,BOCCEW MKVAZT,BASRIG'}
+    event_bindings: {click: set_bmi_index_click}
   - name: plotSexDistribution
     properties: {}
     type: Plot

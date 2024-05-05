@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-import anvil.server
 import plotly.graph_objs as go
 
 class Form1(Form1Template):
@@ -19,7 +18,7 @@ class Form1(Form1Template):
   def load_plots(self):
         self.plot_ahi_distribution()
         self.plot_alcohol_consumption()
-        self.plot_bmi_distribution()
+        # self.plot_bmi_distribution()
         self.plot_hypertension_diabetes_prevalence()
         self.plot_nocturia_by_age()
         self.plot_odi_distribution()
@@ -42,11 +41,20 @@ class Form1(Form1Template):
         # Display the plot in the Plot component
         self.plotAgeDistribution.figure = fig
 
-  def plot_bmi_distribution(self):
-      bmi_data = anvil.server.call('get_bmi_distribution')
-      fig = go.Figure(data=[go.Histogram(x=bmi_data)])
-      fig.update_layout(title='BMI Distribution')
-      self.plotBMIDistribution.figure = fig
+  def button_plot_bmi_distribution_click(self, **event_args):
+        # Get the minimum and maximum BMI from the text inputs
+        min_bmi = float(self.text_input_min_bmi.text)
+        max_bmi = float(self.text_input_max_bmi.text)
+
+        # Call the server function with the specified BMI range
+        bmi_data = anvil.server.call('get_bmi_distribution', min_bmi, max_bmi)
+        
+        # Create the histogram plot
+        fig = go.Figure(data=[go.Histogram(x=bmi_data)])
+        fig.update_layout(title='BMI Distribution', xaxis_title='BMI', yaxis_title='Frequency')
+
+        # Display the plot in the Plot component
+        self.plotBMIDistribution.figure = fig
 
   def plot_sex_distribution(self):
       sex_data = anvil.server.call('get_sex_distribution')
@@ -99,13 +107,13 @@ class Form1(Form1Template):
       fig.update_layout(title='ODI Distribution')
       self.plotODIDistribution.figure = fig
 
-  def plotBMIDistribution_click(self, points, **event_args):
-    """This method is called when a data point is clicked."""
+  def Set_age_range_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    self.button_plot_age_distribution_click(**event_args)
     pass
 
-  def text_input_max_age_pressed_enter(self, **event_args):
-    print("Clicked")
-    self.button_plot_age_distribution_click(self, **event_args)
-   
+  def set_bmi_index_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    self.button_plot_bmi_distribution_click(**event_args)
     pass
       
