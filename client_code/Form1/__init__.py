@@ -13,19 +13,8 @@ class Form1(Form1Template):
         self.init_components(**properties)
         
         # Call plotting functions to load plots on form initialization
-        self.load_plots()
+        # self.load_plots()
 
-  def load_plots(self):
-        self.plot_ahi_distribution()
-        # self.plot_alcohol_consumption()
-        # self.plot_bmi_distribution()
-        self.plot_hypertension_diabetes_prevalence()
-        # self.plot_nocturia_by_age()
-        # self.plot_odi_distribution()
-        # self.plot_sex_distribution()
-        # self.plot_sleep_efficiency_by_age()
-        # self.plot_smoking_status()
-  
   def button_plot_age_distribution_click(self, **event_args):
         # Get the minimum and maximum age from the text inputs
         min_age = int(self.min_age.text)
@@ -115,20 +104,38 @@ class Form1(Form1Template):
   #     fig.update_layout(title='Smoking Status')
   #     self.plotSmokingStatus.figure = fig
   
-  def plot_hypertension_diabetes_prevalence(self):
-      data = anvil.server.call('get_hypertension_diabetes_prevalence')
-      fig = go.Figure(data=[
-          go.Bar(name='Hypertension', x=list(data['hypertension'].keys()), y=list(data['hypertension'].values())),
-          go.Bar(name='Diabetes', x=list(data['diabetes'].keys()), y=list(data['diabetes'].values()))
-      ])
-      fig.update_layout(title='Hypertension and Diabetes Prevalence', barmode='group')
-      self.plotHypertensionDiabetesPrevalence.figure = fig
+  def button_plot_hypertension_diabetes_prevalence_click(self, **event_args):
+        # Get the minimum and maximum age from user inputs
+        min_age = int(self.min_age.text)  # Assuming there's an input for min age
+        max_age = int(self.max_age.text)  # Assuming there's an input for max age
+
+        # Call the server function with the specified age range
+        data = anvil.server.call('get_hypertension_diabetes_prevalence', min_age, max_age)
+        
+        # Create the bar plot
+        fig = go.Figure(data=[
+            go.Bar(name='Hypertension', x=list(data['hypertension'].keys()), y=list(data['hypertension'].values())),
+            go.Bar(name='Diabetes', x=list(data['diabetes'].keys()), y=list(data['diabetes'].values()))
+        ])
+        fig.update_layout(title='Hypertension and Diabetes Prevalence', barmode='group', xaxis_title='Condition', yaxis_title='Count')
+
+        # Display the plot in the Plot component
+        self.plotHypertensionDiabetesPrevalence.figure = fig
   
-  def plot_ahi_distribution(self):
-      ahi_data = anvil.server.call('get_ahi_distribution')
-      fig = go.Figure(data=[go.Histogram(x=ahi_data)])
-      fig.update_layout(title='AHI Distribution')
-      self.plotAHIDistribution.figure = fig
+  def button_plot_ahi_distribution_click(self, **event_args):
+        # Get the minimum and maximum age from user inputs
+        min_age = int(self.min_age.text)  # Assuming there's an input for min age
+        max_age = int(self.max_age.text)  # Assuming there's an input for max age
+
+        # Call the server function with the specified age range
+        ahi_data = anvil.server.call('get_ahi_distribution', min_age, max_age)
+        
+        # Create the histogram
+        fig = go.Figure(data=[go.Histogram(x=ahi_data)])
+        fig.update_layout(title='AHI Distribution', xaxis_title='AHI', yaxis_title='Frequency')
+
+        # Display the plot in the Plot component
+        self.plotAHIDistribution.figure = fig
   
   def button_plot_odi_distribution_click(self, **event_args):
         # Get the minimum and maximum age from user inputs
@@ -155,6 +162,8 @@ class Form1(Form1Template):
     self.button_plot_odi_distribution_click(**event_args)
     self.button_plot_nocturia_by_age_click(**event_args)
     self.button_plot_alcohol_consumption_click(**event_args)
+    self.button_plot_ahi_distribution_click(**event_args)
+    self.button_plot_hypertension_diabetes_prevalence_click(**event_args)
     pass
 
   def plotSexDistribution_click(self, **event_args):

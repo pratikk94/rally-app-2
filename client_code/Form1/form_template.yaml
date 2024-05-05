@@ -73,14 +73,31 @@ components:
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,JNLNCC KWMUOE,GEUQVF'}
+  - name: label_9
+    properties: {text: 'x-axis: ''Yes'' and ''No'' categories for each condition.
+
+        y-axis: Count of individuals in each category for hypertension and diabetes.',
+      align: center}
+    type: Label
+    layout_properties: {grid_position: 'TMXOJF,JNLNCC TTRFPU,XCDPIB'}
   - name: plotHypertensionDiabetesPrevalence
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,JNLNCC DKYHRV,CNWNEP'}
+  - name: label_7
+    properties: {text: Alcohol consumption in grams/week(y) vs frequency(x)}
+    type: Label
+    layout_properties: {grid_position: 'TMXOJF,TQXYUN RKDCZT,PVFZWQ'}
   - name: plotAlcoholConsumption
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,TQXYUN HLDWJS,YHXVNY'}
+  - name: label_8
+    properties: {text: 'x-axis: Apnea-Hypopnea Index (AHI) values.
+
+        y-axis: Frequency of each AHI value range.'}
+    type: Label
+    layout_properties: {grid_position: 'TMXOJF,TQXYUN GQFFMQ,TPMFUW'}
   - name: plotAHIDistribution
     properties: {}
     type: Plot

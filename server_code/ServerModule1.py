@@ -9,7 +9,7 @@ import pandas as pd
 # Load the data
 @anvil.server.callable
 def load_data():
-    return pd.read_csv(data_files['noctoria_df.csv'])
+    return pd.read_csv(data_files['nocturia_df.csv'])
 
 @anvil.server.callable
 def get_age_distribution(min_age, max_age):
@@ -59,14 +59,23 @@ def get_smoking_status():
     return df['smoking'].value_counts().to_dict()
 
 @anvil.server.callable
-def get_hypertension_diabetes_prevalence():
-    df = load_data()
-    return df[['hypertension', 'diabetes']].apply(pd.Series.value_counts).fillna(0).astype(int).to_dict()
+def get_hypertension_diabetes_prevalence(min_age, max_age):
+    df = load_data() # Correct path to your data file
+    # Filter the DataFrame for the specified age range
+    filtered_df = df[(df['age'] >= min_age) & (df['age'] <= max_age)]
+    hypertension_counts = filtered_df['hypertension'].value_counts().to_dict()
+    diabetes_counts = filtered_df['diabetes'].value_counts().to_dict()
+    return {'hypertension': hypertension_counts, 'diabetes': diabetes_counts}
 
 @anvil.server.callable
-def get_ahi_distribution():
-    df = load_data()
-    return df['ahi'].tolist()
+def get_ahi_distribution(min_age, max_age):
+    df = load_data() # Correct path to your data file
+    # Filter the DataFrame for the specified age range
+    filtered_df = df[(df['age'] >= min_age) & (df['age'] <= max_age)]
+    ahi_data = filtered_df['ahi'].tolist()  # Assuming 'ahi' is a column in your DataFrame
+    return ahi_data
+
+
 
 @anvil.server.callable
 def get_odi_distribution(min_age, max_age):
