@@ -9,7 +9,7 @@ import pandas as pd
 # Load the data
 @anvil.server.callable
 def load_data():
-    return pd.read_csv(data_files['noctoria_df.csv'])
+    return pd.read_csv(data_files['nocturia_df.csv'])
 
 @anvil.server.callable
 def get_age_distribution(min_age, max_age):
