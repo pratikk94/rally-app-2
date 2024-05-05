@@ -8,16 +8,24 @@ components:
   name: column_panel_1
   layout_properties: {slot: default}
   components:
+  - name: label_8
+    properties: {text: ENTER MINUMUM AGE}
+    type: Label
+    layout_properties: {grid_position: 'OWQLLC,STPITH BLXEPQ,DFTPSF'}
   - name: min_age
-    properties: {}
+    properties: {text: ''}
     type: TextBox
-    layout_properties: {grid_position: 'OWQLLC,STPITH'}
+    layout_properties: {grid_position: 'OWQLLC,STPITH DAHXWT,FHYBOV'}
+  - name: label_9
+    properties: {text: ENTER MAXIMUM AGE}
+    type: Label
+    layout_properties: {grid_position: 'OWQLLC,TMIVOR HIJOST,LZBEPH'}
   - name: max_age
-    properties: {}
+    properties: {text: ''}
     type: TextBox
-    layout_properties: {grid_position: 'OWQLLC,TMIVOR'}
+    layout_properties: {grid_position: 'OWQLLC,TMIVOR WIOSQT,DEGRSA'}
   - name: set_age
-    properties: {text: SET AGE LIMIT}
+    properties: {text: CREATE DASHBOARD PER MIN/MAX AGE ENTERED}
     type: Button
     layout_properties: {grid_position: 'OWQLLC,INNULN'}
     event_bindings: {click: set_age_click}
@@ -77,6 +85,10 @@ components:
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,JNLNCC DKYHRV,CNWNEP'}
+  - name: label_7
+    properties: {text: Below is the amount of alcohol (x) vs frequency (y) plot}
+    type: Label
+    layout_properties: {grid_position: 'TMXOJF,TQXYUN OFQAAL,RGDOGX'}
   - name: plotAlcoholConsumption
     properties: {}
     type: Plot
