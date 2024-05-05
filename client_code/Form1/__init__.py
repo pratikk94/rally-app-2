@@ -8,51 +8,6 @@ from anvil.tables import app_tables
 import anvil.server
 import plotly.graph_objs as go
 
-
-    
-
-
-def plot_age_distribution():
-    age_data = anvil.server.call('get_age_distribution')
-    plt.hist(age_data, title="Age Distribution")
-
-def plot_bmi_distribution():
-    bmi_data = anvil.server.call('get_bmi_distribution')
-    plt.hist(bmi_data, title="BMI Distribution")
-
-def plot_sex_distribution():
-    sex_data = anvil.server.call('get_sex_distribution')
-    plt.pie(labels=sex_data.keys(), values=sex_data.values(), title="Sex Distribution")
-
-def plot_nocturia_by_age():
-    data = anvil.server.call('get_nocturia_by_age')
-    plt.scatter(x=[x[0] for x in data if x[1] == 'Yes'], y=[1]*sum(x[1] == 'Yes' for x in data), title="Nocturia by Age")
-
-def plot_sleep_efficiency_by_age():
-    data = anvil.server.call('get_sleep_efficiency_by_age')
-    plt.scatter(x=[x[0] for x in data], y=[x[1] for x in data], title="Sleep Efficiency by Age")
-
-def plot_alcohol_consumption():
-    alcohol_data = anvil.server.call('get_alcohol_consumption')
-    plt.hist(alcohol_data, title="Alcohol Consumption")
-
-def plot_smoking_status():
-    smoking_data = anvil.server.call('get_smoking_status')
-    plt.pie(labels=smoking_data.keys(), values=smoking_data.values(), title="Smoking Status")
-
-def plot_hypertension_diabetes_prevalence():
-    data = anvil.server.call('get_hypertension_diabetes_prevalence')
-    plt.bar(x=data.keys(), y=[data['hypertension']['Yes'], data['diabetes']['Yes']], title="Hypertension and Diabetes Prevalence")
-
-def plot_ahi_distribution():
-    ahi_data = anvil.server.call('get_ahi_distribution')
-    plt.hist(ahi_data, title="AHI Distribution")
-
-def plot_odi_distribution():
-    data = anvil.server.call('get_odi_distribution')
-    plt.line(x=[x[0] for x in data], y=[x[1] for x in data], title="ODI by Age")
-
-
 class Form1(Form1Template):
   def __init__(self, **properties):
         # Set Form properties and Data Bindings.
@@ -63,17 +18,81 @@ class Form1(Form1Template):
 
   def load_plots(self):
         # Age Distribution
-        age_data = anvil.server.call('get_age_distribution')
-        age_trace = go.Histogram(x=age_data)
-        layout = go.Layout(title="Age Distribution", xaxis=dict(title="Age"), yaxis=dict(title="Frequency"))
-        fig = go.Figure(data=[age_trace], layout=layout)
-        self.plotAgeDistribution.figure = fig
+        self.plot_age_distribution()
+        self.plot_ahi_distribution()
+        self.plot_alcohol_consumption()
+        self.plot_bmi_distribution()
+        self.plot_hypertension_diabetes_prevalence()
+        self.plot_nocturia_by_age()
+        self.plot_odi_distribution()
+        self.plot_sex_distribution()
+        self.plot_sleep_efficiency_by_age()
+        #self.plot_smoking_status()
+  
+  def plot_age_distribution(self):
+      age_data = anvil.server.call('get_age_distribution')
+      fig = go.Figure(data=[go.Histogram(x=age_data)])
+      fig.update_layout(title='Age Distribution')
+      self.plotAgeDistribution.figure = fig  # 'plotAgeDistribution' is the name of the Plot component on your form
 
-        # BMI Distribution
-        bmi_data = anvil.server.call('get_bmi_distribution')
-        bmi_trace = go.Histogram(x=bmi_data)
-        layout = go.Layout(title="BMI Distribution", xaxis=dict(title="BMI"), yaxis=dict(title="Frequency"))
-        fig = go.Figure(data=[bmi_trace], layout=layout)
-        self.plotBMIDistribution.figure = fig
+  def plot_bmi_distribution(self):
+      bmi_data = anvil.server.call('get_bmi_distribution')
+      fig = go.Figure(data=[go.Histogram(x=bmi_data)])
+      fig.update_layout(title='BMI Distribution')
+      self.plotBMIDistribution.figure = fig
 
-        # More plots can be added similarly
+  def plot_sex_distribution(self):
+      sex_data = anvil.server.call('get_sex_distribution')
+      fig = go.Figure(data=[go.Pie(labels=list(sex_data.keys()), values=list(sex_data.values()))])
+      fig.update_layout(title='Sex Distribution')
+      self.plotSexDistribution.figure = fig
+  
+  def plot_nocturia_by_age(self):
+      data = anvil.server.call('get_nocturia_by_age')
+      fig = go.Figure(data=[go.Scatter(x=[item[0] for item in data], y=[item[1] for item in data], mode='markers')])
+      fig.update_layout(title='Nocturia by Age', xaxis_title='Age', yaxis_title='Nocturia')
+      self.plotNocturiaByAge.figure = fig
+  
+  def plot_sleep_efficiency_by_age(self):
+      data = anvil.server.call('get_sleep_efficiency_by_age')
+      fig = go.Figure(data=[go.Scatter(x=[item[0] for item in data], y=[item[1] for item in data], mode='markers')])
+      fig.update_layout(title='Sleep Efficiency by Age')
+      self.plotSleepEfficiencyByAge.figure = fig
+  
+  def plot_alcohol_consumption(self):
+      alcohol_data = anvil.server.call('get_alcohol_consumption')
+      fig = go.Figure(data=[go.Histogram(x=alcohol_data)])
+      fig.update_layout(title='Alcohol Consumption')
+      self.plotAlcoholConsumption.figure = fig
+  
+  # def plot_smoking_status(self):
+  #     smoking_data = anvil.server.call('get_smoking_status')
+  #     fig = go.Figure(data=[go.Pie(labels=list(smoking_data.keys()), values=list(smoking_data.values()))])
+  #     fig.update_layout(title='Smoking Status')
+  #     self.plotSmokingStatus.figure = fig
+  
+  def plot_hypertension_diabetes_prevalence(self):
+      data = anvil.server.call('get_hypertension_diabetes_prevalence')
+      fig = go.Figure(data=[
+          go.Bar(name='Hypertension', x=list(data['hypertension'].keys()), y=list(data['hypertension'].values())),
+          go.Bar(name='Diabetes', x=list(data['diabetes'].keys()), y=list(data['diabetes'].values()))
+      ])
+      fig.update_layout(title='Hypertension and Diabetes Prevalence', barmode='group')
+      self.plotHypertensionDiabetesPrevalence.figure = fig
+  
+  def plot_ahi_distribution(self):
+      ahi_data = anvil.server.call('get_ahi_distribution')
+      fig = go.Figure(data=[go.Histogram(x=ahi_data)])
+      fig.update_layout(title='AHI Distribution')
+      self.plotAHIDistribution.figure = fig
+  
+  def plot_odi_distribution(self):
+      odi_data = anvil.server.call('get_odi_distribution')
+      fig = go.Figure(data=[go.Scatter(x=[item[0] for item in odi_data], y=[item[1] for item in odi_data], mode='lines')])
+      fig.update_layout(title='ODI Distribution')
+      self.plotODIDistribution.figure = fig
+
+  def plotBMIDistribution_click(self, points, **event_args):
+    """This method is called when a data point is clicked."""
+    pass
+      
