@@ -23,7 +23,7 @@ class Form1(Form1Template):
         self.plot_nocturia_by_age()
         self.plot_odi_distribution()
         self.plot_sex_distribution()
-        self.plot_sleep_efficiency_by_age()
+        #self.plot_sleep_efficiency_by_age()
         #self.plot_smoking_status()
   
   def button_plot_age_distribution_click(self, **event_args):
@@ -68,11 +68,20 @@ class Form1(Form1Template):
       fig.update_layout(title='Nocturia by Age', xaxis_title='Age', yaxis_title='Nocturia')
       self.plotNocturiaByAge.figure = fig
   
-  def plot_sleep_efficiency_by_age(self):
-      data = anvil.server.call('get_sleep_efficiency_by_age')
-      fig = go.Figure(data=[go.Scatter(x=[item[0] for item in data], y=[item[1] for item in data], mode='markers')])
-      fig.update_layout(title='Sleep Efficiency by Age')
-      self.plotSleepEfficiencyByAge.figure = fig
+  def button_plot_sleep_efficiency_click(self, **event_args):
+        # Get the minimum and maximum age from the text inputs
+        min_age = int(self.text_input_min_age_eff.text)
+        max_age = int(self.text_input_max_age_eff.text)
+
+        # Call the server function with the specified age range
+        data = anvil.server.call('get_sleep_efficiency_by_age', min_age, max_age)
+        
+        # Create the scatter plot
+        fig = go.Figure(data=[go.Scatter(x=[item[0] for item in data], y=[item[1] for item in data], mode='markers')])
+        fig.update_layout(title='Sleep Efficiency by Age', xaxis_title='Age', yaxis_title='Sleep Efficiency')
+
+        # Display the plot in the Plot component
+        self.plotSleepEfficiencyByAge.figure = fig
   
   def plot_alcohol_consumption(self):
       alcohol_data = anvil.server.call('get_alcohol_consumption')
@@ -115,5 +124,10 @@ class Form1(Form1Template):
   def set_bmi_index_click(self, **event_args):
     """This method is called when the button is clicked"""
     self.button_plot_bmi_distribution_click(**event_args)
+    pass
+
+  def set_age_range_efficiency_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    self.button_plot_sleep_efficiency_click(**event_args)
     pass
       

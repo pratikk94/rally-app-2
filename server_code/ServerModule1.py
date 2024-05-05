@@ -36,9 +36,11 @@ def get_nocturia_by_age():
     return df[['age', 'nocturia']].values.tolist()
 
 @anvil.server.callable
-def get_sleep_efficiency_by_age():
-    df = load_data()
-    return df[['age', 'sleep_efficiency']].values.tolist()
+def get_sleep_efficiency_by_age(min_age, max_age):
+    df = load_data()  # Ensure this path is correct
+    # Filter the data based on age range
+    filtered_df = df[(df['age'] >= min_age) & (df['age'] <= max_age)]
+    return filtered_df[['age', 'sleep_efficiency']].values.tolist()
 
 @anvil.server.callable
 def get_alcohol_consumption():
