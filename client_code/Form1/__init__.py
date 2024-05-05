@@ -17,14 +17,14 @@ class Form1(Form1Template):
 
   def load_plots(self):
         self.plot_ahi_distribution()
-        self.plot_alcohol_consumption()
+        # self.plot_alcohol_consumption()
         # self.plot_bmi_distribution()
         self.plot_hypertension_diabetes_prevalence()
-        self.plot_nocturia_by_age()
-        #self.plot_odi_distribution()
-        self.plot_sex_distribution()
-        #self.plot_sleep_efficiency_by_age()
-        #self.plot_smoking_status()
+        # self.plot_nocturia_by_age()
+        # self.plot_odi_distribution()
+        # self.plot_sex_distribution()
+        # self.plot_sleep_efficiency_by_age()
+        # self.plot_smoking_status()
   
   def button_plot_age_distribution_click(self, **event_args):
         # Get the minimum and maximum age from the text inputs
@@ -62,11 +62,22 @@ class Form1(Form1Template):
       fig.update_layout(title='Sex Distribution')
       self.plotSexDistribution.figure = fig
   
-  def plot_nocturia_by_age(self):
-      data = anvil.server.call('get_nocturia_by_age')
-      fig = go.Figure(data=[go.Scatter(x=[item[0] for item in data], y=[item[1] for item in data], mode='markers')])
-      fig.update_layout(title='Nocturia by Age', xaxis_title='Age', yaxis_title='Nocturia')
-      self.plotNocturiaByAge.figure = fig
+  def button_plot_nocturia_by_age_click(self, **event_args):
+        # Get the minimum and maximum age from user inputs
+        min_age = int(self.min_age.text)
+        max_age = int(self.max_age.text)
+
+        # Call the server function with the specified age range
+        data = anvil.server.call('get_nocturia_by_age', min_age, max_age)
+        
+        # Create the scatter plot
+        fig = go.Figure(data=[go.Scatter(x=[item[0] for item in data], 
+                                         y=[1 if item[1] == 'Yes' else 0 for item in data], # Assuming 'nocturia' is a Yes/No field
+                                         mode='markers')])
+        fig.update_layout(title='Nocturia by Age', xaxis_title='Age', yaxis_title='Nocturia')
+
+        # Display the plot in the Plot component
+        self.plotNocturiaByAge.figure = fig
   
   def button_plot_sleep_efficiency_click(self, **event_args):
         # Get the minimum and maximum age from the text inputs
@@ -83,11 +94,20 @@ class Form1(Form1Template):
         # Display the plot in the Plot component
         self.plotSleepEfficiencyByAge.figure = fig
   
-  def plot_alcohol_consumption(self):
-      alcohol_data = anvil.server.call('get_alcohol_consumption')
-      fig = go.Figure(data=[go.Histogram(x=alcohol_data)])
-      fig.update_layout(title='Alcohol Consumption')
-      self.plotAlcoholConsumption.figure = fig
+  def button_plot_alcohol_consumption_click(self, **event_args):
+        # Get the minimum and maximum age from user inputs
+        min_age = int(self.min_age.text)
+        max_age = int(self.max_age.text)
+
+        # Call the server function with the specified age range
+        alcohol_data = anvil.server.call('get_alcohol_consumption', min_age, max_age)
+        
+        # Create the histogram
+        fig = go.Figure(data=[go.Histogram(x=alcohol_data)])
+        fig.update_layout(title='Alcohol Consumption', xaxis_title='Alcohol Units', yaxis_title='Frequency')
+
+        # Display the plot in the Plot component
+        self.plotAlcoholConsumption.figure = fig
   
   # def plot_smoking_status(self):
   #     smoking_data = anvil.server.call('get_smoking_status')
@@ -130,7 +150,28 @@ class Form1(Form1Template):
     """This method is called when the button is clicked"""
     self.button_plot_sleep_efficiency_click(**event_args)
     self.button_plot_bmi_distribution_click(**event_args)
+    self.plotSexDistribution_click(**event_args)
     self.button_plot_age_distribution_click(**event_args)
     self.button_plot_odi_distribution_click(**event_args)
+    self.button_plot_nocturia_by_age_click(**event_args)
+    self.button_plot_alcohol_consumption_click(**event_args)
     pass
+
+  def plotSexDistribution_click(self, **event_args):
+       # Get the minimum and maximum age from the text inputs
+        min_age = int(self.min_age.text)
+        max_age = int(self.max_age.text)
+
+        # Call the server function with the specified age range
+        sex_data = anvil.server.call('get_sex_distribution', min_age, max_age)
+        
+        # Create the pie chart
+        labels = list(sex_data.keys())
+        values = list(sex_data.values())
+        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
+        fig.update_layout(title='Sex Distribution by Age Range')
+
+        # Display the plot in the Plot component
+        self.plotSexDistribution.figure = fig
+        pass
       

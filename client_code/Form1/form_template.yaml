@@ -48,6 +48,7 @@ components:
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'VDKDFE,RWJRSE ODVWWN,ODYCOV'}
+    event_bindings: {click: plotSexDistribution_click}
   - name: label_5
     properties: {text: Below is age(x) vs presence of nocturia(y) plot, align: center}
     type: Label
@@ -56,6 +57,10 @@ components:
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,PJUVNK LSYUDV,ICSONV'}
+  - name: label_6
+    properties: {text: Below is a graph with age(x) to odi (y), align: center}
+    type: Label
+    layout_properties: {grid_position: 'TMXOJF,PJUVNK QXUUJO,FJBFGV'}
   - name: plotODIDistribution
     properties: {}
     type: Plot
