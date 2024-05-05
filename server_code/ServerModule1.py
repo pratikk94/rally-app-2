@@ -63,6 +63,8 @@ def get_ahi_distribution():
     return df['ahi'].tolist()
 
 @anvil.server.callable
-def get_odi_distribution():
-    df = load_data()
-    return df.groupby('age')['odi'].mean().reset_index().values.tolist()
+def get_odi_distribution(min_age, max_age):
+    df = load_data()  # Ensure this path is correct
+    # Filter data based on the provided age range
+    filtered_df = df[(df['age'] >= min_age) & (df['age'] <= max_age)]
+    return filtered_df.groupby('age')['odi'].mean().reset_index().values.tolist()

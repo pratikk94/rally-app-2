@@ -30,20 +30,6 @@ components:
     type: Plot
     layout_properties: {grid_position: 'VDKDFE,BAOOBK DQVAXF,SLKZTB'}
     event_bindings: {click: plot_1_click}
-  - name: text_input_min_age
-    properties: {text: '', align: center}
-    type: TextBox
-    layout_properties: {grid_position: 'VDKDFE,BAOOBK FOAYUJ,BGJDWB'}
-  - name: text_input_max_age
-    properties: {text: '', align: center}
-    type: TextBox
-    layout_properties: {grid_position: 'VDKDFE,BAOOBK FOAYUJ,ECNTSR'}
-    event_bindings: {pressed_enter: text_input_max_age_pressed_enter}
-  - name: Set_age_range
-    properties: {text: Set age Range}
-    type: Button
-    layout_properties: {grid_position: 'VDKDFE,BAOOBK IELTLP,OZUOTC'}
-    event_bindings: {click: Set_age_range_click}
   - name: label_2
     properties: {text: Below graph gives us BMI (x) vs frequency of nocturia (y),
       align: center}
@@ -54,19 +40,6 @@ components:
     type: Plot
     layout_properties: {grid_position: 'VDKDFE,BOCCEW REFGDQ,QHOOAK'}
     event_bindings: {click: plotBMIDistribution_click}
-  - name: text_input_min_bmi
-    properties: {text: '', align: center}
-    type: TextBox
-    layout_properties: {grid_position: 'VDKDFE,BOCCEW KTCAJX,DWMGCU'}
-  - name: text_input_max_bmi
-    properties: {text: '', align: center}
-    type: TextBox
-    layout_properties: {grid_position: 'VDKDFE,BOCCEW KTCAJX,SHVJPU'}
-  - name: set_bmi_index
-    properties: {text: SET BMI RANGE}
-    type: Button
-    layout_properties: {grid_position: 'VDKDFE,BOCCEW MKVAZT,BASRIG'}
-    event_bindings: {click: set_bmi_index_click}
   - name: label_3
     properties: {text: 'Below graph is a pie chart for sex distribution ', align: center}
     type: Label
@@ -83,18 +56,6 @@ components:
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,PJUVNK LSYUDV,ICSONV'}
-  - name: text_box_1
-    properties: {}
-    type: TextBox
-    layout_properties: {grid_position: 'TMXOJF,PJUVNK OZZNOE,VEYQME'}
-  - name: text_box_2
-    properties: {}
-    type: TextBox
-    layout_properties: {grid_position: 'TMXOJF,PJUVNK OZZNOE,QPNXDF'}
-  - name: button_1
-    properties: {text: Set age Range}
-    type: Button
-    layout_properties: {grid_position: 'TMXOJF,PJUVNK BFDGML,JKORHD'}
   - name: plotODIDistribution
     properties: {}
     type: Plot
@@ -107,19 +68,6 @@ components:
     properties: {}
     type: Plot
     layout_properties: {grid_position: 'TMXOJF,JNLNCC KWMUOE,GEUQVF'}
-  - name: text_input_min_age_eff
-    properties: {}
-    type: TextBox
-    layout_properties: {grid_position: 'TMXOJF,JNLNCC HBPUFA,APULQO'}
-  - name: text_input_max_age_eff
-    properties: {}
-    type: TextBox
-    layout_properties: {grid_position: 'TMXOJF,JNLNCC HBPUFA,IBPJYG'}
-  - name: set_age_range_efficiency
-    properties: {text: SET AGE RANGE}
-    type: Button
-    layout_properties: {grid_position: 'TMXOJF,JNLNCC IOMVXI,CADSXC'}
-    event_bindings: {click: set_age_range_efficiency_click}
   - name: plotHypertensionDiabetesPrevalence
     properties: {}
     type: Plot

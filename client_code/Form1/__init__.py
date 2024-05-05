@@ -21,15 +21,15 @@ class Form1(Form1Template):
         # self.plot_bmi_distribution()
         self.plot_hypertension_diabetes_prevalence()
         self.plot_nocturia_by_age()
-        self.plot_odi_distribution()
+        #self.plot_odi_distribution()
         self.plot_sex_distribution()
         #self.plot_sleep_efficiency_by_age()
         #self.plot_smoking_status()
   
   def button_plot_age_distribution_click(self, **event_args):
         # Get the minimum and maximum age from the text inputs
-        min_age = int(self.text_input_min_age.text)
-        max_age = int(self.text_input_max_age.text)
+        min_age = int(self.min_age.text)
+        max_age = int(self.max_age.text)
 
         # Call the server function with the specified age range
         age_data = anvil.server.call('get_age_distribution', min_age, max_age)
@@ -43,8 +43,8 @@ class Form1(Form1Template):
 
   def button_plot_bmi_distribution_click(self, **event_args):
         # Get the minimum and maximum BMI from the text inputs
-        min_bmi = float(self.text_input_min_bmi.text)
-        max_bmi = float(self.text_input_max_bmi.text)
+        min_bmi = float(self.min_age.text)
+        max_bmi = float(self.max_age.text)
 
         # Call the server function with the specified BMI range
         bmi_data = anvil.server.call('get_bmi_distribution', min_bmi, max_bmi)
@@ -70,8 +70,8 @@ class Form1(Form1Template):
   
   def button_plot_sleep_efficiency_click(self, **event_args):
         # Get the minimum and maximum age from the text inputs
-        min_age = int(self.text_input_min_age_eff.text)
-        max_age = int(self.text_input_max_age_eff.text)
+        min_age = int(self.min_age.text)
+        max_age = int(self.max_age.text)
 
         # Call the server function with the specified age range
         data = anvil.server.call('get_sleep_efficiency_by_age', min_age, max_age)
@@ -110,12 +110,20 @@ class Form1(Form1Template):
       fig.update_layout(title='AHI Distribution')
       self.plotAHIDistribution.figure = fig
   
-  def plot_odi_distribution(self):
-      odi_data = anvil.server.call('get_odi_distribution')
-      fig = go.Figure(data=[go.Scatter(x=[item[0] for item in odi_data], y=[item[1] for item in odi_data], mode='lines')])
-      fig.update_layout(title='ODI Distribution')
-      self.plotODIDistribution.figure = fig
+  def button_plot_odi_distribution_click(self, **event_args):
+        # Get the minimum and maximum age from user inputs
+        min_age = int(self.min_age.text)  # Assuming 'text_input_min_age' is your input component for minimum age
+        max_age = int(self.max_age.text)  # Assuming 'text_input_max_age' is your input component for maximum age
 
+        # Call the server function with the specified age range
+        odi_data = anvil.server.call('get_odi_distribution', min_age, max_age)
+        
+        # Create the line plot
+        fig = go.Figure(data=[go.Scatter(x=[item[0] for item in odi_data], y=[item[1] for item in odi_data], mode='lines')])
+        fig.update_layout(title='ODI Distribution', xaxis_title='Age', yaxis_title='Average ODI')
+
+        # Display the plot in the Plot component
+        self.plotODIDistribution.figure = fig
 
 
   def set_age_click(self, **event_args):
@@ -123,5 +131,6 @@ class Form1(Form1Template):
     self.button_plot_sleep_efficiency_click(**event_args)
     self.button_plot_bmi_distribution_click(**event_args)
     self.button_plot_age_distribution_click(**event_args)
+    self.button_plot_odi_distribution_click(**event_args)
     pass
       
