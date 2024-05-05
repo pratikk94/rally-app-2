@@ -116,18 +116,12 @@ class Form1(Form1Template):
       fig.update_layout(title='ODI Distribution')
       self.plotODIDistribution.figure = fig
 
-  def Set_age_range_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    self.button_plot_age_distribution_click(**event_args)
-    pass
 
-  def set_bmi_index_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    self.button_plot_bmi_distribution_click(**event_args)
-    pass
 
-  def set_age_range_efficiency_click(self, **event_args):
+  def set_age_click(self, **event_args):
     """This method is called when the button is clicked"""
     self.button_plot_sleep_efficiency_click(**event_args)
+    self.button_plot_bmi_distribution_click(**event_args)
+    self.button_plot_age_distribution_click(**event_args)
     pass
       

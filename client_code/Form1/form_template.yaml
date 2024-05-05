@@ -8,6 +8,19 @@ components:
   name: column_panel_1
   layout_properties: {slot: default}
   components:
+  - name: min_age
+    properties: {}
+    type: TextBox
+    layout_properties: {grid_position: 'OWQLLC,STPITH'}
+  - name: max_age
+    properties: {}
+    type: TextBox
+    layout_properties: {grid_position: 'OWQLLC,TMIVOR'}
+  - name: set_age
+    properties: {text: SET AGE LIMIT}
+    type: Button
+    layout_properties: {grid_position: 'OWQLLC,INNULN'}
+    event_bindings: {click: set_age_click}
   - name: label_1
     properties: {text: Below graph gives us age(x) vs frequency of nocturia (y), align: center}
     type: Label
